@@ -1,18 +1,18 @@
 # Eco-Simulation
 A small ecosystem simulation.<br/>
-Author:&nbsp;     Lennart S.<br/>
-Version: &nbsp;   v0.0.1a<br/>
-Language: &nbsp;  C/C++<br/>
+Author:     &emsp;  Lennart S.<br/>
+Version:    &emsp;  v0.0.1a<br/>
+Language:   &emsp;  C/C++<br/>
 
 ## Features:
 >  coming soon 
 
 ## Supported Platforms
 (:white_check_mark: - Yes | :x: - No | :warning: - MAYBE in the future)
-- Windows:&nbsp; :white_check_mark:
-- MacOS:&nbsp; :warning:
-- Linux:&nbsp; :warning:
-- Android & IOS:&nbsp; :x:
+- Windows:      &emsp;&emsp; :white_check_mark:
+- MacOS:        &emsp;&emsp; :warning:
+- Linux:        &emsp;&emsp; :warning:
+- Android & IOS:      &emsp; :x:
 
 ## Installation Guide
 >  coming soon 
