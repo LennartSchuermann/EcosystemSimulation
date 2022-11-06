@@ -4,7 +4,7 @@ Author:     &emsp;  Lennart S.<br/>
 Version:    &emsp;  v0.0.1a<br/>
 Language:   &emsp;  C/C++<br/>
 
-## Features:
+## Features
 >  coming soon 
 
 ## Supported Platforms
