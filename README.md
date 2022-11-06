@@ -18,5 +18,5 @@ Language:   &emsp;  C/C++<br/>
 >  coming soon 
 
 ## Pictures
-> first prototype design
+> first prototype
 ![Alt text](images/previewScreenshot.png?raw=false "Preview")
