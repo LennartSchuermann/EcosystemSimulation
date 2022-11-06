@@ -9,10 +9,10 @@ Language:   &emsp;  C/C++<br/>
 
 ## Supported Platforms
 (:white_check_mark: - Yes | :x: - No | :warning: - MAYBE in the future)
-- Windows:      &emsp;&emsp; :white_check_mark:
-- MacOS:        &emsp;&emsp; :warning:
-- Linux:        &emsp;&emsp; :warning:
-- Android & IOS:      &emsp; :x:
+- Windows: :white_check_mark:
+- MacOS: :warning:
+- Linux: :warning:
+- Android & IOS: :x:
 
 ## Installation Guide
 >  coming soon 
