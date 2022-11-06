@@ -13,8 +13,7 @@ int main()
     sf::Clock clock;
 
     std::vector<Entity> entities;
-    //max Test: 10.000
-    for (int i = 0; i < 500; i++) 
+    for (int i = 0; i < 500; i++)       //max Test: 10.000 
     {
         Entity entity;
         entities.push_back(entity);
