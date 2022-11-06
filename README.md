@@ -1,1 +1,1 @@
-# EcosystemSimulation
+# Ecosystem Simulation by Lennart S.
