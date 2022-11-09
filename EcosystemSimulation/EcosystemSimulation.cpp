@@ -25,6 +25,8 @@ int main()
         float time = clock.restart().asSeconds();
         float fps = 1.0f / time;
 
+        std::cout << "FPS: " << fps << std::endl;
+
         // check all the window's events that were triggered since the last iteration of the loop
         sf::Event event;
         while (window.pollEvent(event))
@@ -37,6 +39,15 @@ int main()
         //Update stuff...
         for (auto& entity : entities) {
             entity.Update();
+        }
+
+
+        //update lifetime
+        for (std::vector<Entity>::iterator it = entities.begin(); it != entities.end(); ++it) {
+            if (it->lifeCounter <= 0) {
+                entities.erase(it);
+                break;
+            }
         }
 
         // clear the window with black color

@@ -1,7 +1,9 @@
+#pragma once
 #include <SFML/Graphics.hpp>
 #include "MathLib.h"
 #include "Constants.h"
 #include "ColorManager.h"
+#include "DNASystem.cpp"
 
 class Entity {
 private:
@@ -11,34 +13,46 @@ private:
 	sf::Vector2f velocity;
 	sf::Vector2f position;
 
+	dna dna;
 	float speed;
-
-	const float SIZE = 10.0f;
-	const int COLLISIONRADIUS = 4;
+	float size;
+	int collisionRadius;
 public:
-	Entity() {
-		//rgb mix = mix2Colors({ 237, 235, 78 }, { 235, 64, 52 });
-		rgb rC = createRandomRgb();
-		sf::Color color(rC.r, rC.g, rC.b, 255);
+	float lifeCounter;
 
-		shape.setRadius(SIZE);
+	Entity() {
+		//gen, read dna & set data
+		this->dna.CreateDNA();
+
+		speed = dna.speed;
+		size = dna.size;
+		collisionRadius = dna.collisionRadius;
+		lifeCounter = dna.maxAge;
+
+		sf::Color color(dna.color.r, dna.color.g, dna.color.b);
+
+		shape.setRadius(size);
 		shape.setFillColor(color);
 
 		color.a = 100;
-		collisionCircle.setRadius(SIZE * COLLISIONRADIUS);
+		collisionCircle.setRadius(size * collisionRadius);
 		collisionCircle.setFillColor(color);
 
 		speed = genRandomNumber(1, 5);
 
-		position = { genRandomNumber(1, SCREENSIZE[0] - SIZE),genRandomNumber(1, SCREENSIZE[1] - SIZE) };
+		position = { genRandomNumber(1, SCREENSIZE[0] - size),genRandomNumber(1, SCREENSIZE[1] - size) };
 		velocity = { 1.0f, 1.0f};
 	}
 
+	Entity(Entity mother, Entity father) {
+		//generate child of two entities
+	}
+
 	void HandleScreenCollision() {
-		if (shape.getPosition().x >= SCREENSIZE[0] - SIZE || shape.getPosition().x <= 0.0f)
+		if (shape.getPosition().x >= SCREENSIZE[0] - size || shape.getPosition().x <= 0.0f)
 			velocity.x *= -1.0f;
 
-		if (shape.getPosition().y >= SCREENSIZE[1] - SIZE || shape.getPosition().y <= 0.0f)
+		if (shape.getPosition().y >= SCREENSIZE[1] - size || shape.getPosition().y <= 0.0f)
 			velocity.y *= -1.0f;
 	}
 
@@ -47,9 +61,15 @@ public:
 		position.y += (velocity.y * speed);
 
 		shape.setPosition(position);
-		collisionCircle.setPosition(position - sf::Vector2f(SIZE * (COLLISIONRADIUS - 1), SIZE * (COLLISIONRADIUS - 1)));
+		collisionCircle.setPosition(position - sf::Vector2f(size * (collisionRadius - 1), size * (collisionRadius - 1)));
 
 		HandleScreenCollision();
+
+		lifeCounter--;
+	}
+
+	void HandleEntityCollision(std::vector<Entity> entities) {
+		//if collision shapes overlap, do smth
 	}
 
 	sf::CircleShape getShape() {
