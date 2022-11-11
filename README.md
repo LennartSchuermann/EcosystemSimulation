@@ -1,11 +1,11 @@
-# Eco-Simulation :recycle: :microbe:
+# :microbe: Eco-Simulation :microbe:
 A small ecosystem simulation.<br/>
 Author:   &emsp;  Lennart S.<br/>
 Version:   &emsp;  v0.0.2a<br/>
 Language:   &emsp;  C/C++<br/>
 
 ## Features
->  coming soon 
+>  coming soon :construction:
 
 ## To Add
 - Collisions
