@@ -25,5 +25,7 @@ Language:   &emsp;  C/C++<br/>
 >  coming soon 
 
 ## Pictures
+> DNA variation prototype
+![Alt text](images/dnaVariation.png?raw=false "DNA Variation")
 > first prototype
 ![Alt text](images/previewScreenshot.png?raw=false "Preview")
