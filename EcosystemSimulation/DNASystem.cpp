@@ -1,11 +1,11 @@
 #include "ColorManager.h"
+#include "Entity.h"
 
-
-struct Dna{};
-typedef struct NamedType : Dna {
+struct dna{};
+typedef struct NamedType : dna {
 	char gender;    //"m" = male, "f" = female
 
-	float size;	
+	float size;
 	float speed;
 
 	int maxAge;				//time in frames * 10
@@ -29,16 +29,28 @@ typedef struct NamedType : Dna {
 		size = genRandomNumber(2, 15);
 		speed = genRandomNumber(1, 5);
 
-		maxAge = genRandomNumber(15, 80) * 10;				//btw 2.5 & 13 sec lifetime
-		reproductionRate = genRandomNumber(15, 50) * 10;	//btw every 2.5 & 8 sec
-		collisionRadius = genRandomNumber(1, 5);
+		maxAge = (int)genRandomNumber(15, 80) * 10;				//btw 2.5 & 13 sec lifetime
+		reproductionRate = (int)genRandomNumber(15, 50) * 10;	//btw every 2.5 & 8 sec
+		collisionRadius = (int)genRandomNumber(1, 5);
 
 		color = createRandomRgb();
 	}
-
-	void generateDNA() {
-		//gen as child
-
-		//rgb mix = mix2Colors({ 237, 235, 78 }, { 235, 64, 52 });
-	}
 } dna;
+
+
+//TODO FIX
+dna GenerateDNA(Entity mother, Entity father) {
+	dna childDna;
+
+	//gen as child
+	childDna.gender = childDna.genGender();
+
+	childDna.size = (mother.dna.size + father.dna.size) / 2;
+	childDna.speed = (mother.dna.speed + father.dna.speed) / 2;
+
+	childDna.maxAge = (mother.dna.maxAge + father.dna.maxAge) / 2;
+	childDna.reproductionRate = (mother.dna.reproductionRate + father.dna.reproductionRate) / 2;
+	childDna.collisionRadius = (mother.dna.collisionRadius + father.dna.collisionRadius) / 2;
+
+	childDna.color = mix2Colors(mother.dna.color, father.dna.color);
+}

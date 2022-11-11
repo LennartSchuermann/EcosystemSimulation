@@ -141,6 +141,7 @@
   <ItemGroup>
     <ClInclude Include="ColorManager.h" />
     <ClInclude Include="Constants.h" />
+    <ClInclude Include="Entity.h" />
     <ClInclude Include="MathLib.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

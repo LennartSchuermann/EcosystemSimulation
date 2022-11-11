@@ -13,11 +13,12 @@ private:
 	sf::Vector2f velocity;
 	sf::Vector2f position;
 
-	dna dna;
 	float speed;
 	float size;
 	int collisionRadius;
+	sf::Color color;
 public:
+	dna dna;
 	float lifeCounter;
 
 	Entity() {
@@ -29,23 +30,27 @@ public:
 		collisionRadius = dna.collisionRadius;
 		lifeCounter = dna.maxAge;
 
-		sf::Color color(dna.color.r, dna.color.g, dna.color.b);
+		color = { (sf::Uint8)dna.color.r, (sf::Uint8)dna.color.g, (sf::Uint8)dna.color.b };
 
-		shape.setRadius(size);
-		shape.setFillColor(color);
-
-		color.a = 100;
-		collisionCircle.setRadius(size * collisionRadius);
-		collisionCircle.setFillColor(color);
-
-		speed = genRandomNumber(1, 5);
-
-		position = { genRandomNumber(1, SCREENSIZE[0] - size),genRandomNumber(1, SCREENSIZE[1] - size) };
-		velocity = { 1.0f, 1.0f};
+		InitEntity();
 	}
 
 	Entity(Entity mother, Entity father) {
 		//generate child of two entities
+
+		InitEntity();
+	}
+
+	void InitEntity() {
+		shape.setRadius(size);
+		shape.setFillColor(color);
+
+		color.a = 100;	//alpha of collisionRadius
+		collisionCircle.setRadius(size * collisionRadius);
+		collisionCircle.setFillColor(color);
+
+		position = { genRandomNumber(1, SCREENSIZE[0] - size),genRandomNumber(1, SCREENSIZE[1] - size) };
+		velocity = { 1.0f, 1.0f };
 	}
 
 	void HandleScreenCollision() {
