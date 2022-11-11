@@ -1,14 +1,8 @@
 # Eco-Simulation
 A small ecosystem simulation.<br/>
-Author:     &emsp;  Lennart S.<br/>
-Version:    &emsp;  v0.0.1a<br/>
+Author  :   &emsp;  Lennart S.<br/>
+Version :   &emsp;  v0.0.2a<br/>
 Language:   &emsp;  C/C++<br/>
-
-|   A small ecosystem simulation. |   |
-|---|---|
-| Author  | Lennart S.  |
-| Version  | v0.0.1a  |
-| Language  | C/C++  |
 
 ## Features
 >  coming soon 
