@@ -1,4 +1,4 @@
-# Eco-Simulation
+# Eco-Simulation :recycle: :microbe:
 A small ecosystem simulation.<br/>
 Author:   &emsp;  Lennart S.<br/>
 Version:   &emsp;  v0.0.2a<br/>
