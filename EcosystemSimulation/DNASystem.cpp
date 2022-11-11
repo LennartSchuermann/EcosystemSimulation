@@ -1,8 +1,6 @@
 #include "ColorManager.h"
-#include "Entity.h"
 
-struct dna{};
-typedef struct NamedType : dna {
+using dna = struct {
 	char gender;    //"m" = male, "f" = female
 
 	float size;
@@ -13,44 +11,48 @@ typedef struct NamedType : dna {
 	int collisionRadius;
 
 	rgb color;
+};
 
-	char genGender() {
-		int gVal = (int)genRandomNumber(0, 2);
-		if (gVal == 0) {
-			return 'm';
-		}
-		return 'f';
+char genGender() {
+	auto gVal = (int)genRandomNumber(0, 2);
+	if (gVal == 0) {
+		return 'm';
 	}
+	return 'f';
+}
 
-	void CreateDNA() {
-		//create random dna
-		gender = genGender();
+dna CreateDNA() {
+	dna createdDna;
 
-		size = genRandomNumber(2, 15);
-		speed = genRandomNumber(1, 5);
+	//create random dna
+	createdDna.gender = genGender();
 
-		maxAge = (int)genRandomNumber(15, 80) * 10;				//btw 2.5 & 13 sec lifetime
-		reproductionRate = (int)genRandomNumber(15, 50) * 10;	//btw every 2.5 & 8 sec
-		collisionRadius = (int)genRandomNumber(1, 5);
+	createdDna.size = genRandomNumber(2, 15);
+	createdDna.speed = genRandomNumber(1, 5);
 
-		color = createRandomRgb();
-	}
-} dna;
+	createdDna.maxAge = (int)genRandomNumber(15, 80) * 10;				//btw 2.5 & 13 sec lifetime
+	createdDna.reproductionRate = (int)genRandomNumber(15, 50) * 10;	//btw every 2.5 & 8 sec
+	createdDna.collisionRadius = (int)genRandomNumber(1, 5);
 
+	createdDna.color = createRandomRgb();
 
-//TODO FIX
-dna GenerateDNA(Entity mother, Entity father) {
+	return createdDna;
+}
+
+dna GenerateDNA(const dna *mother, const dna *father) {
 	dna childDna;
 
 	//gen as child
-	childDna.gender = childDna.genGender();
+	childDna.gender = genGender();
 
-	childDna.size = (mother.dna.size + father.dna.size) / 2;
-	childDna.speed = (mother.dna.speed + father.dna.speed) / 2;
+	childDna.size = (mother->size + father->size) / 2;
+	childDna.speed = (mother->speed + father->speed) / 2;
 
-	childDna.maxAge = (mother.dna.maxAge + father.dna.maxAge) / 2;
-	childDna.reproductionRate = (mother.dna.reproductionRate + father.dna.reproductionRate) / 2;
-	childDna.collisionRadius = (mother.dna.collisionRadius + father.dna.collisionRadius) / 2;
+	childDna.maxAge = (mother->maxAge + father->maxAge) / 2;
+	childDna.reproductionRate = (mother->reproductionRate + father->reproductionRate) / 2;
+	childDna.collisionRadius = (mother->collisionRadius + father->collisionRadius) / 2;
 
-	childDna.color = mix2Colors(mother.dna.color, father.dna.color);
+	childDna.color = mix2Colors(mother->color, father->color);
+	
+	return childDna;
 }

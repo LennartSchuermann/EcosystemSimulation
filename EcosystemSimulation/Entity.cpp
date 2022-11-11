@@ -23,7 +23,7 @@ public:
 
 	Entity() {
 		//gen, read dna & set data
-		this->dna.CreateDNA();
+		dna = CreateDNA();
 
 		speed = dna.speed;
 		size = dna.size;
