@@ -4,6 +4,8 @@ Author:     &emsp;  Lennart S.<br/>
 Version:    &emsp;  v0.0.1a<br/>
 Language:   &emsp;  C/C++<br/>
 
+|   |   |
+|---|---|
 | Author  | Lennart S.  |
 | Version  | v0.0.1a  |
 | Language  | C/C++  |
