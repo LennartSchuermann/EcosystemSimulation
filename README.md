@@ -7,6 +7,13 @@ Language:   &emsp;  C/C++<br/>
 ## Features
 >  coming soon 
 
+## To Add
+- Collisions
+- Walking Paths
+- Reproduction
+- Food & Saturation
+- Hunter
+
 ## Supported Platforms
 (:white_check_mark: - Yes | :x: - No | :warning: - MAYBE in the future)
 - Windows: :white_check_mark:
