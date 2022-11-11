@@ -1,10 +1,11 @@
 #pragma once
+#include "Constants.h"
+#include "ColorManager.h"
 #include <SFML/Graphics.hpp>
 #include "MathLib.h"
-#include "DNASystem.cpp"
+#include "DNASystem.h"
 
-class Entity
-{
+class Entity {
 private:
 	sf::CircleShape shape;
 	sf::CircleShape collisionCircle;
@@ -19,10 +20,10 @@ private:
 
 public:
 	dna dna;
-	float lifeCounter;
+	int lifeCounter;
 
 	Entity();
-	Entity(Entity mother, Entity father);
+	Entity(const Entity* mother, const Entity* father);
 
 	void InitEntity();
 

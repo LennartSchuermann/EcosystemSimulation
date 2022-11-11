@@ -1,87 +1,66 @@
 #pragma once
-#include <SFML/Graphics.hpp>
-#include "MathLib.h"
-#include "Constants.h"
-#include "ColorManager.h"
-#include "DNASystem.cpp"
+#include "Entity.h"
 
-class Entity {
-private:
-	sf::CircleShape shape;
-	sf::CircleShape collisionCircle;
+Entity::Entity() {
+	//gen, read dna & set data
+	dna = CreateDNA();
 
-	sf::Vector2f velocity;
-	sf::Vector2f position;
+	speed = dna.speed;
+	size = dna.size;
+	collisionRadius = dna.collisionRadius;
+	lifeCounter = dna.maxAge;
 
-	float speed;
-	float size;
-	int collisionRadius;
-	sf::Color color;
-public:
-	dna dna;
-	float lifeCounter;
+	color = { (sf::Uint8)dna.color.r, (sf::Uint8)dna.color.g, (sf::Uint8)dna.color.b };
 
-	Entity() {
-		//gen, read dna & set data
-		dna = CreateDNA();
+	InitEntity();
+}
 
-		speed = dna.speed;
-		size = dna.size;
-		collisionRadius = dna.collisionRadius;
-		lifeCounter = dna.maxAge;
+Entity::Entity(const Entity *mother, const Entity* father) {
+	//generate child of two entities
 
-		color = { (sf::Uint8)dna.color.r, (sf::Uint8)dna.color.g, (sf::Uint8)dna.color.b };
+	InitEntity();
+}
 
-		InitEntity();
-	}
+void Entity::InitEntity() {
+	shape.setRadius(size);
+	shape.setFillColor(color);
 
-	Entity(Entity mother, Entity father) {
-		//generate child of two entities
+	color.a = 100;	//alpha of collisionRadius
+	collisionCircle.setRadius(size * collisionRadius);
+	collisionCircle.setFillColor(color);
 
-		InitEntity();
-	}
+	position = { genRandomNumber(1, SCREENSIZE[0] - size),genRandomNumber(1, SCREENSIZE[1] - size) };
+	velocity = { 1.0f, 1.0f };
+}
 
-	void InitEntity() {
-		shape.setRadius(size);
-		shape.setFillColor(color);
+void Entity::HandleScreenCollision() {
+	if (shape.getPosition().x >= SCREENSIZE[0] - size || shape.getPosition().x <= 0.0f)
+		velocity.x *= -1.0f;
 
-		color.a = 100;	//alpha of collisionRadius
-		collisionCircle.setRadius(size * collisionRadius);
-		collisionCircle.setFillColor(color);
+	if (shape.getPosition().y >= SCREENSIZE[1] - size || shape.getPosition().y <= 0.0f)
+		velocity.y *= -1.0f;
+}
 
-		position = { genRandomNumber(1, SCREENSIZE[0] - size),genRandomNumber(1, SCREENSIZE[1] - size) };
-		velocity = { 1.0f, 1.0f };
-	}
+void Entity::Update() {
+	position.x += (velocity.x * speed);
+	position.y += (velocity.y * speed);
 
-	void HandleScreenCollision() {
-		if (shape.getPosition().x >= SCREENSIZE[0] - size || shape.getPosition().x <= 0.0f)
-			velocity.x *= -1.0f;
+	shape.setPosition(position);
+	collisionCircle.setPosition(position - sf::Vector2f(size * (collisionRadius - 1), size * (collisionRadius - 1)));
 
-		if (shape.getPosition().y >= SCREENSIZE[1] - size || shape.getPosition().y <= 0.0f)
-			velocity.y *= -1.0f;
-	}
+	HandleScreenCollision();
 
-	void Update() {
-		position.x += (velocity.x * speed);
-		position.y += (velocity.y * speed);
+	lifeCounter--;
+}
 
-		shape.setPosition(position);
-		collisionCircle.setPosition(position - sf::Vector2f(size * (collisionRadius - 1), size * (collisionRadius - 1)));
+void Entity::HandleEntityCollision(std::vector<Entity> entities) {
+	//if collision shapes overlap, do smth
+}
 
-		HandleScreenCollision();
+sf::CircleShape Entity::getShape() {
+	return this->shape;
+}
 
-		lifeCounter--;
-	}
-
-	void HandleEntityCollision(std::vector<Entity> entities) {
-		//if collision shapes overlap, do smth
-	}
-
-	sf::CircleShape getShape() {
-		return this->shape;
-	}
-
-	sf::CircleShape getCollisionShape() {
-		return this->collisionCircle;
-	}
-};
+sf::CircleShape Entity::getCollisionShape() {
+	return this->collisionCircle;
+}

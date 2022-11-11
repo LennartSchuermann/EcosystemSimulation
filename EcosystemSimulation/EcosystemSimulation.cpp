@@ -1,8 +1,7 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
-
 #include "Constants.h"
-#include "Entity.cpp"
+#include "Entity.h"
 
 int main()
 {
@@ -43,7 +42,7 @@ int main()
 
 
         //update lifetime
-        for (std::vector<Entity>::iterator it = entities.begin(); it != entities.end(); ++it) {
+        for (auto it = entities.begin(); it != entities.end(); ++it) {
             if (it->lifeCounter <= 0) {
                 entities.erase(it);
                 break;

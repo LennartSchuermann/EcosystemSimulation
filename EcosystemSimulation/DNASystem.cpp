@@ -1,17 +1,4 @@
-#include "ColorManager.h"
-
-using dna = struct {
-	char gender;    //"m" = male, "f" = female
-
-	float size;
-	float speed;
-
-	int maxAge;				//time in frames * 10
-	int reproductionRate;
-	int collisionRadius;
-
-	rgb color;
-};
+#include "DNASystem.h"
 
 char genGender() {
 	auto gVal = (int)genRandomNumber(0, 2);
@@ -22,7 +9,7 @@ char genGender() {
 }
 
 dna CreateDNA() {
-	dna createdDna;
+	auto createdDna = dna();
 
 	//create random dna
 	createdDna.gender = genGender();
@@ -30,7 +17,7 @@ dna CreateDNA() {
 	createdDna.size = genRandomNumber(2, 15);
 	createdDna.speed = genRandomNumber(1, 5);
 
-	createdDna.maxAge = (int)genRandomNumber(15, 80) * 10;				//btw 2.5 & 13 sec lifetime
+	createdDna.maxAge = (int)genRandomNumber(15, 80) * 100;				//btw 2.5 & 13 sec lifetime
 	createdDna.reproductionRate = (int)genRandomNumber(15, 50) * 10;	//btw every 2.5 & 8 sec
 	createdDna.collisionRadius = (int)genRandomNumber(1, 5);
 
@@ -40,7 +27,7 @@ dna CreateDNA() {
 }
 
 dna GenerateDNA(const dna *mother, const dna *father) {
-	dna childDna;
+	auto childDna = dna();
 
 	//gen as child
 	childDna.gender = genGender();
