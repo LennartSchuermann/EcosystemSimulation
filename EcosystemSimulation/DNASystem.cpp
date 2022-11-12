@@ -17,7 +17,7 @@ dna CreateDNA() {
 	createdDna.size = genRandomNumber(2, 15);
 	createdDna.speed = genRandomNumber(1, 5);
 
-	createdDna.maxAge = (int)genRandomNumber(15, 80) * 100;				//btw 2.5 & 13 sec lifetime
+	createdDna.maxAge = (int)genRandomNumber(15, 80) * 10;				//btw 2.5 & 13 sec lifetime
 	createdDna.reproductionRate = (int)genRandomNumber(15, 50) * 10;	//btw every 2.5 & 8 sec
 	createdDna.collisionRadius = (int)genRandomNumber(1, 5);
 

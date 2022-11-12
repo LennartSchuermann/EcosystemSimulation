@@ -12,7 +12,7 @@ int main()
     sf::Clock clock;
 
     std::vector<Entity> entities;
-    for (int i = 0; i < 10; i++)       //max Test: 10.000 
+    for (int i = 0; i < 100; i++)       //max Test: 10.000 
     {
         Entity entity;
         entities.push_back(entity);
@@ -35,15 +35,18 @@ int main()
                 window.close();
         }
 
+        //----------------------------------------------------------------
+
         //Update stuff...
         for (auto& entity : entities) {
             entity.Update();
+            entity.HandleEntityCollision(&entities);
         }
 
 
         //update lifetime
         for (auto it = entities.begin(); it != entities.end(); ++it) {
-            if (it->lifeCounter <= 0) {
+            if (it->dna.maxAge <= 0) {
                 entities.erase(it);
                 break;
             }
@@ -60,6 +63,8 @@ int main()
 
         // end the current frame
         window.display();
+
+        //----------------------------------------------------------------
     }
 
     return 0;

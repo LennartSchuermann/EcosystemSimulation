@@ -13,17 +13,12 @@ private:
 	sf::Vector2f velocity;
 	sf::Vector2f position;
 
-	float speed;
-	float size;
-	int collisionRadius;
 	sf::Color color;
-
 public:
 	dna dna;
-	int lifeCounter;
 
 	Entity();
-	Entity(const Entity* mother, const Entity* father);
+	Entity(Entity mother, Entity father);
 
 	void InitEntity();
 
@@ -31,9 +26,9 @@ public:
 
 	void Update();
 
-	void HandleEntityCollision(std::vector<Entity> entities);
+	void HandleEntityCollision(std::vector<Entity> *entities) const;
 
-	sf::CircleShape getShape();
+	sf::CircleShape getShape() const;
 
-	sf::CircleShape getCollisionShape();
+	sf::CircleShape getCollisionShape() const;
 };
