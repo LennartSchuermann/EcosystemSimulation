@@ -26,7 +26,9 @@ public:
 
 	void Update();
 
-	void HandleEntityCollision(std::vector<Entity> *entities) const;
+	void HandleEntityCollision(std::vector<Entity>* entities, int* childrenAmount);
+
+	int canCreateChild(const Entity* entity) const;
 
 	sf::CircleShape getShape() const;
 

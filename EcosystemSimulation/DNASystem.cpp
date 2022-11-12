@@ -22,6 +22,7 @@ dna CreateDNA() {
 	createdDna.collisionRadius = (int)genRandomNumber(1, 5);
 
 	createdDna.color = createRandomRgb();
+	createdDna.currentLifeTime = 0;
 
 	return createdDna;
 }
@@ -40,6 +41,7 @@ dna GenerateDNA(const dna *mother, const dna *father) {
 	childDna.collisionRadius = (mother->collisionRadius + father->collisionRadius) / 2;
 
 	childDna.color = mix2Colors(mother->color, father->color);
+	childDna.currentLifeTime = 0;
 	
 	return childDna;
 }

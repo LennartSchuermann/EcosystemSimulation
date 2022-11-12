@@ -6,6 +6,8 @@ Entity::Entity() {
 	dna = CreateDNA();
 
 	color = { (sf::Uint8)dna.color.r, (sf::Uint8)dna.color.g, (sf::Uint8)dna.color.b };
+	position = { genRandomNumber(dna.size, SCREENSIZE[0] - dna.size),genRandomNumber(dna.size, SCREENSIZE[1] - dna.size) };
+	velocity = { 1.0f, 1.0f };
 
 	InitEntity();
 }
@@ -15,6 +17,8 @@ Entity::Entity(Entity mother, Entity father) {
 	dna = GenerateDNA(&mother.dna, &father.dna);
 
 	color = { (sf::Uint8)dna.color.r, (sf::Uint8)dna.color.g, (sf::Uint8)dna.color.b };
+	position = { mother.getShape().getPosition().x,mother.getShape().getPosition().y };
+	velocity = { mother.velocity.x, -mother.velocity.y };
 
 	InitEntity();
 }
@@ -26,9 +30,6 @@ void Entity::InitEntity() {
 	color.a = 100;	//alpha of collisionRadius
 	collisionCircle.setRadius(dna.size * (float)dna.collisionRadius);
 	collisionCircle.setFillColor(color);
-
-	position = { genRandomNumber(1, SCREENSIZE[0] - dna.size),genRandomNumber(1, SCREENSIZE[1] - dna.size) };
-	velocity = { 1.0f, 1.0f };
 }
 
 void Entity::HandleScreenCollision() {
@@ -48,27 +49,44 @@ void Entity::Update() {
 
 	HandleScreenCollision();
 
-	dna.maxAge--;
+	dna.currentLifeTime++;
 }
 
-void Entity::HandleEntityCollision(std::vector<Entity> *entities) const {
+void Entity::HandleEntityCollision(std::vector<Entity> *entities, int* childrenAmount) {
 	//if collision shapes overlap, do smth
 	
-	for (auto const& entity : *entities) {
+	for (auto& entity : *entities) {
 		if (this != &entity) {
-			float dx = (collisionCircle.getPosition().x + (dna.collisionRadius * dna.size / 2)) - (entity.getCollisionShape().getPosition().x
-				+ (entity.dna.collisionRadius * entity.dna.size / 2));
-			float dy = (collisionCircle.getPosition().y + (dna.collisionRadius * dna.size / 2)) - (entity.getCollisionShape().getPosition().y
-				+ (entity.dna.collisionRadius * entity.dna.size / 2));
+			float dx = (collisionCircle.getPosition().x + ((float)dna.collisionRadius * dna.size / 2)) - (entity.getCollisionShape().getPosition().x
+				+ ((float)entity.dna.collisionRadius * entity.dna.size / 2));
+			float dy = (collisionCircle.getPosition().y + ((float)dna.collisionRadius * dna.size / 2)) - (entity.getCollisionShape().getPosition().y
+				+ ((float)entity.dna.collisionRadius * entity.dna.size / 2));
 
 			float distance = std::sqrt((dx * dx) + (dy * dy));
 
-			if (distance <= (dna.collisionRadius * dna.size) + (entity.dna.collisionRadius * entity.dna.size)) {
-				//Do smth
-				//std::cout << "Collision!" << std::endl;
+			if (distance <= ((float)dna.collisionRadius * dna.size) + ((float)entity.dna.collisionRadius * entity.dna.size)) {
+				if (this->canCreateChild(&entity)) {
+					//create children
+					auto child = Entity(*this, entity);
+					entities->push_back(child);
+
+					(*childrenAmount)++;
+
+					this->dna.reproductionRate += dna.reproductionRate;
+					entity.dna.currentLifeTime += entity.dna.currentLifeTime;
+				}
 			}
 		}
 	}
+}
+
+int Entity::canCreateChild(const Entity* entity) const {
+	if (dna.currentLifeTime >= dna.reproductionRate && entity->dna.currentLifeTime >= entity->dna.reproductionRate 
+		&& dna.gender != entity->dna.gender) {
+		return true;
+	}
+
+	return false;
 }
 
 sf::CircleShape Entity::getShape() const {

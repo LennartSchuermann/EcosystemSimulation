@@ -3,16 +3,21 @@
 #include "Constants.h"
 #include "Entity.h"
 
+const int cells = 100;
+
 int main()
 {
     sf::RenderWindow window(sf::VideoMode(SCREENSIZE[0], SCREENSIZE[1]), "Ecosystem by Lennart S.", sf::Style::Titlebar | sf::Style::Close);
     window.setFramerateLimit(FPS);
 
+    int childrenAmount = 0;
+
     //Game clock
     sf::Clock clock;
+    sf::Clock runTimeclock;
 
     std::vector<Entity> entities;
-    for (int i = 0; i < 100; i++)       //max Test: 10.000 
+    for (int i = 0; i < cells; i++)       //max Test: 10.000 
     {
         Entity entity;
         entities.push_back(entity);
@@ -21,10 +26,23 @@ int main()
     // run the program as long as the window is open
     while (window.isOpen())
     {
+        sf::Time runtime = runTimeclock.getElapsedTime();
+
         float time = clock.restart().asSeconds();
         float fps = 1.0f / time;
 
         std::cout << "FPS: " << fps << std::endl;
+
+        if (entities.size() <= 0) {
+            std::cout << "-----------------------------Stats-----------------------------" << std::endl;
+            //std::cout << "All cells are dead!" << std::endl;
+            std::cout << "Initial Cells: " << cells << " | Children: " << childrenAmount 
+                << " \n=> " << cells + childrenAmount << std::endl;
+            std::cout << "Runtime: " << runtime.asSeconds() << "s" << std::endl;
+            std::cout << "---------------------------------------------------------------" << std::endl;
+
+            window.close();
+        }
 
         // check all the window's events that were triggered since the last iteration of the loop
         sf::Event event;
@@ -40,13 +58,13 @@ int main()
         //Update stuff...
         for (auto& entity : entities) {
             entity.Update();
-            entity.HandleEntityCollision(&entities);
+            entity.HandleEntityCollision(&entities, &childrenAmount);
         }
 
 
         //update lifetime
         for (auto it = entities.begin(); it != entities.end(); ++it) {
-            if (it->dna.maxAge <= 0) {
+            if (it->dna.currentLifeTime >= it->dna.maxAge) {
                 entities.erase(it);
                 break;
             }
@@ -56,7 +74,7 @@ int main()
         window.clear(sf::Color(61, 61, 61));
 
         //Draw stuff...
-        for (auto& entity : entities) {
+        for (const auto& entity : entities) {
             window.draw(entity.getCollisionShape());
             window.draw(entity.getShape());
         }

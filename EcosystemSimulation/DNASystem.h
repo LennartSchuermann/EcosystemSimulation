@@ -7,6 +7,7 @@ using dna = struct {
 	float size;
 	float speed;
 
+	int currentLifeTime;
 	int maxAge;				//time in frames * 10
 	int reproductionRate;
 	int collisionRadius;
