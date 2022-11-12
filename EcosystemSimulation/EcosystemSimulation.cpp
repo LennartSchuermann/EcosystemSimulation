@@ -3,7 +3,7 @@
 #include "Constants.h"
 #include "Entity.h"
 
-const int cells = 100;
+const int cells = 1000;
 
 int main()
 {
@@ -85,5 +85,6 @@ int main()
         //----------------------------------------------------------------
     }
 
+    std::getchar();
     return 0;
 }

@@ -8,9 +8,7 @@ Language:   &emsp;  C/C++<br/>
 >  coming soon :construction:
 
 ## To Add
-- Collisions
 - Walking Paths
-- Reproduction
 - Food & Saturation
 - Hunter
 
