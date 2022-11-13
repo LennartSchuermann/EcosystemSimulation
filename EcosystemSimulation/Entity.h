@@ -18,7 +18,7 @@ public:
 	dna dna;
 
 	Entity();
-	Entity(Entity mother, Entity father);
+	Entity(const Entity& mother, const Entity& father);
 
 	void InitEntity();
 
@@ -26,9 +26,9 @@ public:
 
 	void Update();
 
-	void HandleEntityCollision(std::vector<Entity>* entities, int* childrenAmount);
+	void HandleEntityCollision(std::vector<Entity>& entities, int& childrenAmount);
 
-	int canCreateChild(const Entity* entity) const;
+	int canCreateChild(const Entity& entity) const;
 
 	sf::CircleShape getShape() const;
 

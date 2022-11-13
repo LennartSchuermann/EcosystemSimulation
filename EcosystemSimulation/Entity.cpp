@@ -12,7 +12,7 @@ Entity::Entity() {
 	InitEntity();
 }
 
-Entity::Entity(Entity mother, Entity father) {
+Entity::Entity(const Entity& mother, const Entity& father) {
 	//generate child of two entities
 	dna = GenerateDNA(&mother.dna, &father.dna);
 
@@ -30,6 +30,10 @@ void Entity::InitEntity() {
 	color.a = 100;	//alpha of collisionRadius
 	collisionCircle.setRadius(dna.size * (float)dna.collisionRadius);
 	collisionCircle.setFillColor(color);
+
+	shape.setPosition(position);
+	collisionCircle.setPosition(position - sf::Vector2f(dna.size * ((float)dna.collisionRadius - 1), 
+		dna.size * ((float)dna.collisionRadius - 1)));
 }
 
 void Entity::HandleScreenCollision() {
@@ -52,10 +56,10 @@ void Entity::Update() {
 	dna.currentLifeTime++;
 }
 
-void Entity::HandleEntityCollision(std::vector<Entity> *entities, int* childrenAmount) {
+void Entity::HandleEntityCollision(std::vector<Entity> &entities, int& childrenAmount) {
 	//if collision shapes overlap, do smth
 	
-	for (auto& entity : *entities) {
+	for (auto& entity : entities) {
 		if (this != &entity) {
 			float dx = (collisionCircle.getPosition().x + ((float)dna.collisionRadius * dna.size / 2)) - (entity.getCollisionShape().getPosition().x
 				+ ((float)entity.dna.collisionRadius * entity.dna.size / 2));
@@ -65,24 +69,24 @@ void Entity::HandleEntityCollision(std::vector<Entity> *entities, int* childrenA
 			float distance = std::sqrt((dx * dx) + (dy * dy));
 
 			if (distance <= ((float)dna.collisionRadius * dna.size) + ((float)entity.dna.collisionRadius * entity.dna.size)) {
-				if (this->canCreateChild(&entity)) {
+				if (this->canCreateChild(entity)) {
 					//create children
 					auto child = Entity(*this, entity);
-					entities->push_back(child);
+					entities.push_back(child);
 
-					(*childrenAmount)++;
+					childrenAmount++;
 
-					this->dna.reproductionRate += dna.reproductionRate;
-					entity.dna.currentLifeTime += entity.dna.currentLifeTime;
+					dna.reproductionRate += dna.reproductionRate;
+					entity.dna.currentLifeTime += entity.dna.reproductionRate;
 				}
 			}
 		}
 	}
 }
 
-int Entity::canCreateChild(const Entity* entity) const {
-	if (dna.currentLifeTime >= dna.reproductionRate && entity->dna.currentLifeTime >= entity->dna.reproductionRate 
-		&& dna.gender != entity->dna.gender) {
+int Entity::canCreateChild(const Entity& entity) const {
+	if (dna.currentLifeTime >= dna.reproductionRate && entity.dna.currentLifeTime >= entity.dna.reproductionRate 
+		&& dna.gender != entity.dna.gender) {
 		return true;
 	}
 

@@ -3,7 +3,7 @@
 #include "Constants.h"
 #include "Entity.h"
 
-const int cells = 1000;
+const int cells = 400;
 
 int main()
 {
@@ -56,9 +56,11 @@ int main()
         //----------------------------------------------------------------
 
         //Update stuff...
-        for (auto& entity : entities) {
+        for (auto& entity:entities) {
+            
+
             entity.Update();
-            entity.HandleEntityCollision(&entities, &childrenAmount);
+            entity.HandleEntityCollision(entities, childrenAmount);
         }
 
 
@@ -70,7 +72,7 @@ int main()
             }
         }
 
-        // clear the window with black color
+        // clear the window with dark color
         window.clear(sf::Color(61, 61, 61));
 
         //Draw stuff...
