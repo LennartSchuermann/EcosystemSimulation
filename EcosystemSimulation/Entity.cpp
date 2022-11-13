@@ -3,22 +3,22 @@
 
 Entity::Entity() {
 	//gen, read dna & set data
-	dna = CreateDNA();
+	this->dna = CreateDNA();
 
-	color = { (sf::Uint8)dna.color.r, (sf::Uint8)dna.color.g, (sf::Uint8)dna.color.b };
-	position = { genRandomNumber(dna.size, SCREENSIZE[0] - dna.size),genRandomNumber(dna.size, SCREENSIZE[1] - dna.size) };
-	velocity = { 1.0f, 1.0f };
+	this->color = { (sf::Uint8)dna.color.r, (sf::Uint8)dna.color.g, (sf::Uint8)dna.color.b };
+	this->position = { genRandomNumber(dna.size, SCREENSIZE[0] - dna.size),genRandomNumber(dna.size, SCREENSIZE[1] - dna.size) };
+	this->velocity = { 1.0f, 1.0f };
 
 	InitEntity();
 }
 
 Entity::Entity(const Entity& mother, const Entity& father) {
 	//generate child of two entities
-	dna = GenerateDNA(&mother.dna, &father.dna);
+	this->dna = GenerateDNA(&mother.dna, &father.dna);
 
-	color = { (sf::Uint8)dna.color.r, (sf::Uint8)dna.color.g, (sf::Uint8)dna.color.b };
-	position = { mother.getShape().getPosition().x,mother.getShape().getPosition().y };
-	velocity = { mother.velocity.x, -mother.velocity.y };
+	this->color = { (sf::Uint8)dna.color.r, (sf::Uint8)dna.color.g, (sf::Uint8)dna.color.b };
+	this->position = { mother.getShape().getPosition().x,mother.getShape().getPosition().y };
+	this->velocity = { mother.velocity.x, -mother.velocity.y };
 
 	InitEntity();
 }
@@ -27,7 +27,7 @@ void Entity::InitEntity() {
 	shape.setRadius(dna.size);
 	shape.setFillColor(color);
 
-	color.a = 100;	//alpha of collisionRadius
+	this->color.a = 100;	//alpha of collisionRadius
 	collisionCircle.setRadius(dna.size * (float)dna.collisionRadius);
 	collisionCircle.setFillColor(color);
 

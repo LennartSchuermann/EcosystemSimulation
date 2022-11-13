@@ -3,7 +3,7 @@
 #include "Constants.h"
 #include "Entity.h"
 
-const int cells = 400;
+const int cells = 400;  //max Test: 1.000, Best: 400
 
 int main()
 {
@@ -17,7 +17,7 @@ int main()
     sf::Clock runTimeclock;
 
     std::vector<Entity> entities;
-    for (int i = 0; i < cells; i++)       //max Test: 10.000 
+    for (int i = 0; i < cells; i++)       
     {
         Entity entity;
         entities.push_back(entity);
@@ -35,7 +35,6 @@ int main()
 
         if (entities.size() <= 0) {
             std::cout << "-----------------------------Stats-----------------------------" << std::endl;
-            //std::cout << "All cells are dead!" << std::endl;
             std::cout << "Initial Cells: " << cells << " | Children: " << childrenAmount 
                 << " \n=> " << cells + childrenAmount << std::endl;
             std::cout << "Runtime: " << runtime.asSeconds() << "s" << std::endl;
@@ -57,12 +56,10 @@ int main()
 
         //Update stuff...
         for (auto& entity:entities) {
-            
-
+            //TODO Sweep & Prune
             entity.Update();
             entity.HandleEntityCollision(entities, childrenAmount);
         }
-
 
         //update lifetime
         for (auto it = entities.begin(); it != entities.end(); ++it) {
