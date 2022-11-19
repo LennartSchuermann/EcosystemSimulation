@@ -2,6 +2,7 @@
 #include <iostream>
 #include "Constants.h"
 #include "Entity.h"
+#include "Utility.cpp"
 
 const int cells = 400;  //max Test: 1.000, Best: 400
 
@@ -54,12 +55,21 @@ int main()
 
         //----------------------------------------------------------------
 
+        //Sweep & Prune
+        auto toCheck = SweepAndPrune(entities);
+
         //Update stuff...
-        for (auto& entity:entities) {
-            //TODO Sweep & Prune
+        for (auto& entity: entities) {
             entity.Update();
-            entity.HandleEntityCollision(entities, childrenAmount);
+            //entity.HandleEntityCollision(entities, childrenAmount);
         }
+
+        for (int i = 0; i < toCheck.size(); ++i) {
+            //TODO Wurst fix
+            CheckEntityCollision(toCheck[i].front(), toCheck[i].back(), childrenAmount, entities);
+        }
+
+
 
         //update lifetime
         for (auto it = entities.begin(); it != entities.end(); ++it) {

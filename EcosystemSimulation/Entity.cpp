@@ -100,3 +100,20 @@ sf::CircleShape Entity::getShape() const {
 sf::CircleShape Entity::getCollisionShape() const {
 	return this->collisionCircle;
 }
+
+//--min & max--
+float Entity::MinCS() const {
+	return this->collisionCircle.getPosition().x;
+}
+
+float Entity::MaxCS() const {
+	return this->collisionCircle.getPosition().x + ((float)this->dna.collisionRadius * this->dna.size);
+}
+
+float Entity::Min() const {
+	return this->shape.getPosition().x;
+}
+
+float Entity::Max() const {
+	return this->shape.getPosition().x + this->dna.size;
+}

@@ -30,6 +30,8 @@ public:
 
 	int canCreateChild(const Entity& entity) const;
 
+	float MinCS() const; float MaxCS() const; float Min() const; float Max() const;
+
 	sf::CircleShape getShape() const;
 
 	sf::CircleShape getCollisionShape() const;
